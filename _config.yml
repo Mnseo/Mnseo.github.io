@@ -1,11 +1,11 @@
-title: Hyde
+title: Mnseo
 description: >-
   Build your own portfolio <br>
   with Hyde.
 url: "https://mnseo.github.io"
-baseurl: "/hyde"
-github: ChemistryX
-email: changeme@chemistryx.me
+baseurl: "/mnseo"
+github: Mnseo
+email: mnseoshin@gmail.com
 google_analytics: "UA_TOKEN"
 
 exclude: [README.md, Gemfile, Gemfile.lock]
