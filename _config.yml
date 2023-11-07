@@ -3,9 +3,8 @@ description: >-
   Build your own portfolio <br>
   with Hyde.
 url: "https://mnseo.github.io/mnseo"
-baseurl: "/mnseo"
 github: Mnseo
-email: tlsalstj01@duksung.ac.kr
+email: mnseoshin@gmail.com
 google_analytics: "UA_TOKEN"
 
 exclude: [README.md, Gemfile, Gemfile.lock]
