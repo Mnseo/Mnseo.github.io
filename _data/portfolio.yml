@@ -1,3 +1,30 @@
-- title: 포트폴리오 데모
-  description: 포트폴리오 데모 아이템입니다.
-  image: demo.png
+- title: 나누밀
+  description: 유저의 취향에 보다 알맞은 장소를 추천합니다.
+  image: nanumeal_icon.png
+  category: Application
+  url: https://github.com/26-kusitms-fullmugu
+
+- title: LIKIT
+  description: 유저의 취향에 보다 알맞은 장소를 추천합니다.
+  image: likit_icon.png
+  category: Application
+  url: https://github.com/27-kusitms-6/Frontend
+
+- title: 언제 어디서 무엇을, WWW
+  description: 약속 조율에 더이상 시간 낭비 하지마세요
+  image: www_icon.png
+  category: Application
+  url: https://github.com/27-kusitms-6/Frontend
+
+- title: Teum Teum 
+  description: 좀 더 쉽고 재미있는 IT 네트워킹을 제공합니다.
+  image: tt_icon.png
+  category: Application
+  url: https://play.google.com/store/apps/details?id=com.teumteum.teumteum
+
+- title: Kusitms Plus
+  description: 출석부터 공지, 팀 조직까지<br>동아리의 모든 문제를 해결합니다
+  image: app_icon.png
+  category: Application
+  url: https://github.com/Mnseo/Kusitms_android
+
