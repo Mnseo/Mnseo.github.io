@@ -1,3 +1,9 @@
+- title: ALLIVERY
+  description: 안전하고 손쉬운 드론 원격 픽업을 제공합니다.
+  image: allivery_icon.png
+  category: Application
+  url: https://github.com/Mnseo/Pabloair_kusitms_A
+
 - title: 나누밀
   description: 유저의 취향에 보다 알맞은 장소를 추천합니다.
   image: nanumeal_icon.png
