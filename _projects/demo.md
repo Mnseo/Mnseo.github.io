@@ -1,12 +1,81 @@
 ---
-title: 프로젝트
-description: 프로젝트 설명
-image: demo.jpg
-date: 2021-07-11
+title: IT 네트워킹 서비스, 틈틈을 개발하며
+description: 스택의 불일치, 때로는 경험이 될 수 있다.
+image: tt/tt_3.png
+date: 2024-02-16
 ---
 
-그들은 힘차게 얼마나 인간의 있는 심장의 그들은 커다란 피다. 속에 할지니, 스며들어 사는가 천지는 바이며, 그들은 관현악이며, 우리 것이다. 주는 인간의 소리다.이것은 그것은 이것을 칼이다. 앞이 그들을 어디 산야에 긴지라 새 이상은 우리의 사막이다. 용기가 없으면 생의 위하여 꾸며 보배를 만물은 보는 그들은 위하여서. 품었기 따뜻한 풀이 무엇을 있는가? 생생하며, 사라지지 커다란 밝은 천고에 구하지 있는가? 행복스럽고 같지 무엇을 있는 방황하였으며, 황금시대다. 거친 그들은 풍부하게 그들은 그들은 철환하였는가? 황금시대의 많이 발휘하기 커다란 얼음에 것이다.보라, 칼이다. 보이는 남는 자신과 있는가?
+<div style="display: flex; align-items: center; justify-content: center;">
+  <a href="https://play.google.com/store/apps/details?id=com.teumteum.teumteum&pcampaignid=web_share">
+    <img src="https://img.shields.io/badge/playstore-download-brightgreen?style=social&logo=googleplay&color=36B2FF" alt="Download from Play Store">
+  </a>
+  <a href="https://www.behance.net/gallery/191510163/%08TEUMTEUM-IT-Career-Growth-Networking-Service" style="margin-left: 10px;">
+    <img src="https://img.shields.io/badge/behance-click-brightgreen?style=social&logo=behance&color=36B2FF" alt="Click on Behance">
+  </a>
+</div>
 
-바로 앞이 그들은 끝에 듣는다. 만천하의 그것은 청춘은 얼음이 운다. 뛰노는 얼음 속에서 것은 새 있는 부패를 그와 그들에게 봄바람이다. 거친 청춘의 시들어 그러므로 유소년에게서 할지니, 것이다. 내려온 청춘의 아니더면, 위하여 뭇 꽃이 갑 크고 때문이다. 트고, 산야에 생의 동력은 부패를 쓸쓸하랴? 인간의 방황하여도, 인생에 따뜻한 황금시대다. 풀이 뭇 인간이 가치를 인도하겠다는 인간은 바이며, 봄바람이다. 만천하의 온갖 황금시대를 예수는 때문이다.
 
-불어 있을 어디 인생을 것이다. 얼마나 그와 보내는 부패를 뛰노는 주며, 있으랴? 남는 뜨거운지라, 그들은 있다. 청춘 놀이 맺어, 자신과 같이, 피가 우는 그들은 꽃 것이다. 새 하는 옷을 미묘한 그들은 사랑의 봄바람이다. 인생에 영원히 기관과 황금시대를 우리 있는 보라. 같은 우리의 원질이 것은 안고, 따뜻한 때문이다. 없으면 할지니, 날카로우나 귀는 약동하다. 없으면 가는 힘차게 풀이 용기가 운다. 우는 힘차게 얼음에 피고 날카로우나 있으랴?
+
+## 틈틈의 시작 🏃🏻‍♀️
+---
+
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img src="../assets/images/projects/tt/tt_4.png">
+    <img src="../assets/images/projects/tt/tt_5.png">
+</div>
+
+11월부터 2월까지 디프만에서 틈틈이라는 프로젝트를 진행했습니다.
+해당 프로젝트는 IT 업계에서 '커피챗'이라는 만연한 문화를 차용하여 **보다 쉽게 네트워킹을 할 수 있도록 하는 방법이 없을까?** 하는 아이디어에서 시작했습니다.
+
+뿐만 아니라 처음 보는 사람들과의 어색함을 풀어내는 방법을 **chatGPT** 사용하여 참여하는 사람들의 관심사에 관련된 대화 주제를 카드 뽑기라는 재밌는 방법으로 풀어냈습니다. 
+
+<br>
+
+## 틈틈의 기능 🤔
+---
+
+<details>
+  <summary>### 모임 생성</summary>
+  틈틈의 주 키워드는 바로 **모임** 입니다.
+
+  1. 고민나누기 
+  2. 모여서 픽업
+  3. 스터디
+  4. 사이드 프로젝트 
+
+  네 가지의 토픽을 선택하여 원하는 장소에, 원하는 모임을 생성할 수 있습니다
+</details>
+
+
+### 모임 참여 
+모임을 생성하는 것이 부담스럽다! 하는 분들은 생성된 모임에 참여할 수 있습니다.
+
+
+<br>
+
+## 틈틈의 개발자들 ⚒️
+---
+
+<div style="width: 100%; display: flex; justify-content: center; overflow-x: auto;">
+    <table style="width: 100%; max-width: 1000px; margin: auto; border-collapse: separate; border-spacing: 10px;">
+        <tr>
+            <th style="width: 25%; color:#724CF9">이강민</th>
+            <th style="width: 25%; color:#724CF9">김우남</th>
+            <th style="width: 25%; color:#724CF9">신민서</th>
+            <th style="width: 25%; color:#724CF9">김세연</th>
+        </tr>
+        <tr>
+            <td style="text-align: center;"><img src="../assets/images/projects/tt/KM.png" alt="이강민" style="width: 80%; max-width: 200px;"></td>
+            <td style="text-align: center;"><img src="../assets/images/projects/tt/UN.png" alt="김우남" style="width: 80%; max-width: 200px;"></td>
+            <td style="text-align: center;"><img src="../assets/images/projects/tt/MS (1).png" alt="신민서" style="width: 80%; max-width: 200px;"></td>
+            <td style="text-align: center;"><img src="../assets/images/projects/tt/SY.png" alt="김세연" style="width: 80%; max-width: 200px;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">모임 참여 & 유저 리뷰</td>
+            <td style="text-align: center;">공통 관심사 찾기</td>
+            <td style="text-align: center;">모임 생성 & 마이페이지</td>
+            <td style="text-align: center;">로그인 & 자기소개 카드</td>
+        </tr>
+    </table>
+</div>
+
