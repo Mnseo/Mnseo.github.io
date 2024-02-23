@@ -156,10 +156,30 @@ UI를 구성하고, compose view에 UI를 바인딩 하는 과정은 순조롭�
 
 <h3 style="background-color: #AA92FF; color: #ffffff; padding: 0.5em;"> 🚩 Problem 1 : 상태 관리와 스크린 전환</h3>
 
-Compose와 XML을 하나의 프로젝트에서 사용하기 위해서는 동일하게 레이아웃 파일을 생성한 다음, 해당 파일에 compose view라는 요소를 주입하여 코틀린으로 작성된 Compose 화면을 Compose View에 바인딩 하는 과정을 거칩니다.
+Compose와 XML을 하나의 프로젝트에서 사용하기 위해서는 동일하게 레이아웃 파일을 생성한 다음, 해당 파일에 compose view라는 요소를 주입하여 코틀린으로 작성된 Compose 화면을 Compose View에 바인딩 하는 과정을 거칩니다. 다만, 문제는 하나의 화면에서 상태에 따라 여러 가지의 view를 보여줄 때 발생합니다. <br>
+모임 생성 플로우에서 고민했던 점과 생각해낸 해결책은 다음과 같았습니다.
 
-문제는 하나의 화면에서 상태에 따라 여러 가지의 view를 보여줄 때 발생합니다.
-모임 생성 플로우는 상단에 프로그레스 바와 이전 페이지로 이동할 수 있는 버튼이 존재하는 상단 버튼이 고정적으로 
+<div style="display: flex; justify-content: space-between;">
+
+<ul>
+    <li>프로그래스바와 상단 버튼이 고정적으로 존재한다.</li>
+        <ul>
+            <li>XML의 구성요소로 두 가지를 배치한다.</li>
+            <li>Compose 내부에 두 가지를 포함하여 구성한다.</li>
+        </ul>
+    <br>
+</ul>
+
+<ul>
+    <li>모임 생성 플로우는 총 8단계이다.</li>
+        <ul>
+            <li>화면마다 Fragment를 생성한다.</li>
+            <li>각 단계마다 state를 할당하여 state에 따라 화면을 교체한다.</li>
+        </ul>
+</ul>
+</div>
+
+첫 번째로 프로그래스
 
 
 <h3 style="background-color: #AA92FF; color: #ffffff; padding: 0.5em;"> 🚩 Problem 2 : UI 재사용, 어떻게 하는건데? </h3>
