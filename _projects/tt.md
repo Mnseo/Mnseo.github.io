@@ -2,7 +2,7 @@
 title: IT 네트워킹 서비스, 틈틈을 개발하며
 description: 스택의 불일치, 때로는 경험이 될 수 있다.
 image: tt/tt_3.png
-date: 2024-02-18
+date: 2024-02-25
 author: Mnseo
 comments: enabled
 ---
@@ -326,11 +326,23 @@ Compose 화면에 프로그래스 바를 직접 구성했을 때, 화면이 업�
 
 <br>
 
-
 <h3 style="background-color: #AA92FF; color: #ffffff; padding: 0.5em;"> 🚩 Problem 3 : 다크/라이트모드 설정마저 일반적인 방법과 다르다 </h3>
 
-틈틈은 다크 모드를 기본으로 설정하여, 라이트 모드를 동시에 개발해야하는 프로젝트였습니다.
-일반적으로 컴포즈에서 
+
+틈틈은 다크 모드를 기본 설정으로 하면서 라이트 모드 개발도 병행해야 했던 프로젝트입니다. Compose에서 다크 모드와 라이트 모드를 구분하기 위한 일반적인 방법은 **isSystemInDarkTheme() 함수를 사용**하여 기기의 모드를 확인한 후, 조건에 따라 커스텀 테마의 컬러셋을 생성하여 Material Theme의 colors로 적용하는 것입니다. 위 방법을 적용하면, 모드 변경 시 자동으로 지정한 커스텀 컬러로 업데이트됩니다
+
+그러나 틈틈 프로젝트는 Compose View에 Composable을 배치하는 구조였기 때문에, 다음과 같은 방식으로 **CompositionLocalProvider를 사용**하여 시스템 모드에 따라 **커스텀 컬러를 동적으로 변경하는 추가적인 처리가 필요**했습니다:
+
+```kotlin
+    //MypageFragment
+       binding.composeMypage.setContent {
+            CompositionLocalProvider(TmtmColorPalette provides if(isSystemInDarkTheme()) ColorPalette_Dark else ColorPalette_Light ) {
+                MyPageScreen(navController = navController, viewModel = viewModel, myPageViewModel = myPageViewModel)
+            }
+        }
+```
+이 과정에서 **Compose View의 사용과 관련된 정보가 매우 제한적**이었고, 찾아낸 자료가 특정 상황에 적용되지 않아 어려움을 겪기도 했습니다. 다행히 StackOverflow에 다양한 사례에 대한 질문과 답변이 있어 이를 참고하여 문제를 해결하는 데 도움을 받았습니다.
+
 
 <br>
 
@@ -383,16 +395,17 @@ Daum 도로명 주소 검색 api를 사용하기 위해 자바 스크립트로 �
         <img src="../assets/images/projects/tt/tt_22.png" style="width: 50%;">
 </div>
 
-틈틈의 개발을 시작하기 전, 도트 캐릭터와 다양한 이미지들을 서버 통신과 로컬 저장 중 어느 방식을 통해 불러올 것인가에 대해 논의했었습니다. 대부분이 틈틈의 컨셉을 잘 보여줄 수 있는 이미지들이었고 데이터와 연결되어있지 않았을때 대체 이미지로 보여주는 것은 이러한 컨셉을 잘 살릴 수 없다는 판단을 내렸습니다.
-따라서 도트 캐릭터들과 이미지들을 로컬에 저장하는 방식을 채택했고, 이 외에도 기획 단계에서 프로젝트 볼륨이 커질 수 있다는 생각이 들어 MVVM 기반의 멀티 모듈을 사용했습니다.
-프로젝트의 시작 단계부터 멀티모듈을 적용했기 때문에 적용 전과 후의 빌드 시간을 비교할 수 없으나, 
+틈틈 개발을 시작하기 전, 도트 캐릭터와 다양한 이미지를 어떻게 불러올지, **서버 통신**을 통해 또는 **로컬 저장소**에서 불러올지에 대해  논의했습니다. 이 이미지들은 틈틈의 컨셉을 잘 표현하는 중요한 요소였으며, 데이터와 연결되지 않았을 때 사용할 **대체 이미지가 컨셉을 충분히 반영하지 못할 것**이라고 판단했습니다. 그래서 도트 캐릭터와 이미지들을 로컬에 저장하기로 결정했습니다. 또한, 프로젝트의 규모가 커질 가능성을 고려하여 **MVVM 아키텍처 기반의 멀티 모듈 구조를 도입**했습니다.
+
+멀티모듈을 프로젝트 시작부터 적용했기 때문에, 틈틈에서의 빌드 시간을 적용 전과 직접 비교할 수는 없지만, 구조 분리를 통한 이점은 명확합니다:
 
 <ul>
     <li> app / core-base 모듈 분리 </li>
     <li> app / MVVM(Presentation, data, domain) 분리 </li>
 </ul>
 
-전자가 현재 프로젝트고, 후자가 동시에 진행한 다른 프로젝트라고 했을 때 
+전자가 틈틈이고, 후자가 동시에 진행했던  멀티 모듈을 적용한 다른 프로젝트라고 했을 때, 후자는 **2m 51sec -> 24 sec로 86% 개선한 바** 있다면, 틈틈은 대략 **30초-35초의 시간이 소요**되었으므로 비슷한 수준의 빌드 시간 개선의 효과가 있었다는 것을 알 수 있습니다. 
+
 
 <br>
 
