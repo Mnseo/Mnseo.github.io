@@ -4,6 +4,7 @@ description: 스택의 불일치, 때로는 경험이 될 수 있다.
 image: tt/tt_3.png
 date: 2024-02-25
 author: Mnseo
+tags: [android, mvvm, multi-module, jetpack-compose]
 comments: enabled
 ---
 

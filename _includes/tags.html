@@ -1,4 +1,4 @@
-{% if post %} {% assign tags = post.tags %} {% else %} {% assign tags = page.tags %} {% endif %}
+{% if project %} {% assign tags = project.tags %} {% else %} {% assign tags = page.tags %} {% endif %}
 <div class="hyde tags{% unless post %} header-tags{% endunless %}">
   {% for site_tag in site.tags %} {% for tag in tags %} {% if site_tag.identifier == tag %}
   <a class="hyde tag" href="{{ site.baseurl }}/tags/{{ site_tag.identifier }}">{{ site_tag.title }}</a>

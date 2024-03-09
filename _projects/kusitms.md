@@ -2,6 +2,7 @@
 title: 모든 경험에는 배움이 존재한다, 큐시즘 플러스
 description: 성장 과정에 거름이 되어준 프로젝트
 image: kusitms/kusitms_1.png
+tags: [android, mvvm, multi-module, jetpack-compose]
 date: 2024-02-28
 author: Mnseo
 comments: enabled
@@ -72,6 +73,10 @@ comments: enabled
 ## 큐시즘 플러스의 기능 🤔
 ---
 
+### 로그인, 온보딩 프로세스 
+
+
+
 
 <br>
 
@@ -81,9 +86,9 @@ comments: enabled
 <div style="width: 100%; display: flex; justify-content: center; overflow-x: auto;">
     <table style="width: 100%; max-width: 1000px; margin: auto; border-collapse: separate; border-spacing: 10px;">
         <tr>
-            <th style="width: 25%; color:#724CF9">정석준</th>
-            <th style="width: 25%; color:#724CF9">신민서</th>
-            <th style="width: 25%; color:#724CF9">김아린</th>
+            <th style="width: 25%; color:#266DFC">정석준</th>
+            <th style="width: 25%; color:#266DFC">신민서</th>
+            <th style="width: 25%; color:#266DFC">김아린</th>
         </tr>
         <tr>
             <td style="text-align: center;"><img src="../assets/images/projects/kusitms/kusitms_7.jpg" alt="정석준" style="width: 80%; max-width: 200px;"></td>
@@ -91,7 +96,7 @@ comments: enabled
             <td style="text-align: center;"><img src="../assets/images/projects/kusitms/kusitms_8.jpg" alt="김아린" style="width: 80%; max-width: 200px;"></td>
         </tr>
         <tr>
-            <td style="text-align: center;">홈 - 공지/커리큘럼</td>
+            <td style="text-align: center;">홈 - 공지/커리큘럼, 검색</td>
             <td style="text-align: center;">로그인/온보딩, 출석체크, 비회원, 설정</td>
             <td style="text-align: center;">팀 조직, 마이 프로필 수정</td>
         </tr>
@@ -99,8 +104,17 @@ comments: enabled
 </div>
 
 
+
+
 ## 개발하며 고민했던 이슈와 해결 과정 🤝
 ---
+
+<h3 style="background-color: #266DFC; color: #ffffff; padding: 0.5em;"> 🫠 초기 세팅과 Base 작업</h3>
+
+<h3 style="background-color: #266DFC; color: #ffffff; padding: 0.5em;"> ⛈️ 자동 로그인이 되지 않는다? 토큰 인터셉터 조정</h3>
+
+<h3 style="background-color: #266DFC; color: #ffffff; padding: 0.5em;"> 🤔 API에 대한 고민,, 멱등성?</h3>
+
 
 <br>
 
