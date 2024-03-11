@@ -187,9 +187,77 @@ comments: enabled
 
 <h3 style="background-color: #266DFC; color: #ffffff; padding: 0.5em;"> 🫠 초기 세팅과 Base 작업</h3>
 
-1차 개발을 시작한 이후 약 세 달이라는 시간을 혼자 개발을 진행했기 때문에, 
+1차 개발이 시작된 후 약 세 달 동안, **규격의 일관성**에 대해 심도 깊게 고민했습니다. 당시엔 팀 확장 가능성을 크게 염두에 두지 않았기 때문에, **개발 작업의 부담을 줄이고 생산성을 극대화하는 방법에 중점**을 두었습니다. 이를 위해, 기본 구성요소(Base)를 확립하는 데 집중하여 효율적인 작업 흐름을 조성할 수 있었습니다.
+
+### 서버 응답 처리 방식 
+```kotlin
+    open class BaseResponse<T>(
+        val result: Result,
+        val payload: T
+    )
+
+    open class nullExceptionResponse<T> (
+        val result: Result,
+        val payload: T?
+        )
+
+    data class Result(
+        val code: Int,
+        val message: String
+    )
+
+```
+서버의 응답 규격에 맞춰 BaseResponse를 제작했습니다. **제네릭 타입을 이용**하여 다양한 데이터의 반환을 처리할 수 있습니다.
+
+```kotlin
+    class NullOnEmptyConverterFactory : Converter.Factory() {
+    fun converterFactory() = this
+    override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object :
+        Converter<ResponseBody, Any?> {
+        val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+        override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) {
+            try{
+                nextResponseBodyConverter.convert(value)
+            }catch (e:Exception){
+                e.printStackTrace()
+                null
+            }
+        } else{
+            null
+        }
+    }
+}
+
+```
+서버로부터의 통신이 성공하여 200 응답 코드가 도착했음에도 불구하고, 가끔 **payload가 null로 반환**되어 BaseResponse 사용 시 오류가 발생하는 경우가 있었습니다. 이런 상황을 해결하기 위해, Null이나 비어 있는(Empty) 값을 적절히 처리할 수 있는 사용자 정의 컨버터,**NullOnEmptyConverterFactory**를 도입했습니다. 
+
+이를 통해, 서버에서 비어있는 응답이 오더라도 앱에서 오류 없이 처리할 수 있게 되었습니다.
 
 
+### UI 컴포넌트화 
+
+```kotlin
+    @Composable
+    fun KusitmsInputField(
+        @StringRes text:Int,
+        value:String = "",
+        onValueChange: (String) -> Unit = {},
+        isError:Boolean = false,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+        modifier: Modifier = Modifier
+    ) {
+          OutlinedTextField(
+            modifier = modifier.then(Modifier.fillMaxWidth()),
+            value = value,
+            onValueChange = onValueChange,
+            interactionSource = interactionSource
+        )
+    }
+
+```
+[이전 포스트](https://mnseo.github.io/projects/tt)에서 언급했듯이, Jetpack Compose에서 컴포저블의 재사용성을 높이기 위해서는 **상태를 내부적으로 관리하지 않고**  ViewModel 같은 외부 상태 관리자로부터 상태를 주입받는 **stateless 설계를 권장**합니다. 상위 컴포넌트로부터 상태를 전달 받음으로써, 컴포저블은 더욱 범용적으로 사용할 수 있습니다. 이 방법을 큐시즘 플러스에도 채택하여 컴포저블의 의존성을 줄이고, 안정적인 Compose 사용에 도움을 줄 수 있었습니다.
+
+<br>
 
 
 <h3 style="background-color: #266DFC; color: #ffffff; padding: 0.5em;"> ⛈️ 자동 로그인이 되지 않는다? 토큰 인터셉터 조정</h3>
@@ -198,9 +266,9 @@ comments: enabled
     <img src="../assets/images/projects/kusitms/kusitms_22.png" style="width: 50%;">
 </div>
 
-사실 자동 로그인은 1차 개발에서부터 이미 구현된 기능이었습니다. 그러나 2차를 개발을 완료하고 QA를 진행하며 자동 로그인이 동작하지 않는 것 같은 의심이 들기 시작했습니다.
+사실, 자동 로그인 기능은 1차 개발 단계에서 이미 구현되어 있었습니다.하지만 2차 개발을 마치고 품질 보증(QA) 과정을 거치는 동안, 자동 로그인이 제대로 작동하지 않는 것으로 의심되기 시작했습니다.
 
-서버 개발자의 의도에 따라 달라질 수 있으나, 큐시즘 플러스의 Access Token의 만료 기한은 1시간, Refresh Token은 일주일이었습니다. 그러나 개발을 진행하며 1시간이 지나면 데이터를 받아오는 요청이 제대로 수행되지 않음을 인지했고, 수정 작업에 들어갔습니다.
+서버 개발자의 설정에 따라 다르긴 하지만, 큐시즘 플러스에서는 접근 토큰(Access Token)의 유효 기간을 1시간으로, 갱신 토큰(Refresh Token)의 유효 기간을 일주일로 설정했습니다. 그런데 개발 도중 발견한 문제는 **1시간이 경과하면 데이터 요청이 제대로 처리되지 않는** 것이었고, 이에 대한 수정 작업을 시작했습니다
 
 기본적인 구현 정보는 아래와 같습니다!
 
@@ -208,7 +276,85 @@ comments: enabled
     <img src="../assets/images/projects/kusitms/kusitms_28.png" style="width: 100%;">
 </div>
 
+Retrofit에서 정의한 메서드를 호출하게 되면, Http 요청은 아래와 같은 순서로 로직이 진행됩니다.
 
+
+<ul>
+    <li>1.Okhttp core을 지나기 전, 요청이 앱 단의 interceptor을 거친다.</li>
+    <li>2.요청은 정의한 로직을 처리하고 Okhttp Core에 보내진다.</li>
+    <li>3.네트워크에 요청을 보내기 전, 네트워크 단의 interceptor을 거친다.</li>
+    <li>4.요청은 정의한 로직을 처리하고 네트워크 요청을 전송한다. </li>
+</ul>
+
+이러한 인터셉터는 인터셉터 클래스를 상속 받아 메서드를 구현할 수 있습니다.
+
+```kotlin
+    class AuthTokenInterceptor @Inject constructor(
+    private val authDataStore: AuthDataStore,
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val originalRequest = chain.request()
+        val requestBuilder = originalRequest.newBuilder()
+
+        val token: String? = runBlocking {authDataStore.authToken.first()} ?: ""
+        val refresh: String? = runBlocking {authDataStore.refreshToken.first()}?: ""
+
+        // "auth/logout" 엔드포인트 확인
+        if (!token.isNullOrEmpty()) {
+            requestBuilder.addHeader("Authorization", "$token")
+        }
+
+        // 로그아웃 요청에는 리프레시 토큰도 추가
+        if (originalRequest.url.encodedPath.endsWith("v1/auth/logout")) {
+            val refreshToken: String? = runBlocking {
+                authDataStore.refreshToken.first()
+            }
+            if (!refreshToken.isNullOrEmpty()) {
+                requestBuilder.addHeader("RefreshToken", "$refresh")
+            }
+        }
+
+        var request = requestBuilder.build()
+        var response = chain.proceed(request)
+    }
+
+```
+
+위는 서버에 요청하는 request 객체를 생성한 코드입니다.
+로그아웃 요청을 제외한 모든 요청에는 AccessToken을 헤더에 넣어줘야 했기 때문에 if문으로 endpoint가 logout일 경우는 refreshToken을 넣어 request 객체를 생성합니다. Interceptor의 메소드는 suspend 함수를 선언할 수 없고, 요청에 **헤더가 비어있을 경우를 처리하기 위해 runBlocking을 통해 동기적으로 토큰 값을 할당** 해주었습니다.
+
+만약 토큰이 만료되었다면, 서버에서 토큰이 만료되었다는 것을 의미하는 코드와 함께 메시지를 보낼 것입니다. 해당 응답이 왔을 때 자동으로 토큰을 갱신하는 API를 호출하고, 직전 요청을 다시 보내는 로직이 필요합니다.
+
+**그런데, 왜 자동 로그인이 처리되지 않았던 걸까요?** 
+
+기존 토큰 갱신 로직은 Authenticator을 호출하는 방식을 채택했습니다. 하지만 서버에서 토큰이 만료될 시 보내는 코드 값은 500이었기에, **407 응답이 올 때만 호출이 되는 Authenticator은 작동하지 않았던 것**입니다.
+
+```kotlin
+    class AuthTokenInterceptor @Inject constructor(
+    private val authDataStore: AuthDataStore,
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        //위와 동일 
+
+        if(response.isTokenInvalid()) {
+            requestBuilder.addHeader("RefreshToken", "$refresh")
+            return newRequestWithToken(refreshToken, response.request)
+        }
+        return response
+        
+    }
+
+    private fun newRequestWithToken(token: String, request: Request): Request =
+        request.newBuilder()
+            .header("Authorization", token)
+            .build()
+}
+
+```
+
+따라서 토큰을 AuthRepository에서 갱신 처리를 한 다음, 해당 토큰을 가져와 Request 객체를 새로 생성하여 헤더에 넣고 요청을 보내 해결할 수 있습니다.
+
+<br>
 
 
 
@@ -273,11 +419,11 @@ comments: enabled
     <img src="../assets/images/projects/kusitms/kusitms_21.png" style="width: 50%;">
 </div>
 
-하지만 서버분의 의도와는 다르게 클라이언트, 즉 **안드로이드에서는 GET 호출에서 Request Body가 가능하지 않았습니다.** 수정한 API를 적용해본 결과, GET은 request Body를 가져선 안된다라는 로그를 발견하며 그 이유를 알게 되었는데요
+하지만 서버분의 의도와는 다르게 클라이언트, 즉 **안드로이드에서는 GET 호출에서 Request Body가 가능하지 않았습니다.** 수정한 API를 적용해본 결과, GET은 Request Body를 가져선 안된다라는 로그를 발견하며 그 이유를 알게 되었는데요
 
-[서칭 결과,](https://jsdevlog.tistory.com/entry/OKHttp-method-GET-must-not-have-a-request-body-%EC%97%90%EB%9F%AC) okhttp의 2020년 2월 최신 버전(3.11.0) 기준으로 **GET 방식 호출에서는 body를 붙이는 것을 허용해주지 않는다고 합니다.** 2014년 이전의 HTTP 요청 메시지에는 body를 허용하나, 이 역시 throw를 통해 원하는 응답을 받을 수 없게 될 확률이 높습니다. 이로 인해 아쉽게도 적용을 하지 못하고 POST 메서드로 Request Body에 데이터를 담아 전송하는 것으로 마무리 되었습니다.
+[서칭 결과,](https://jsdevlog.tistory.com/entry/OKHttp-method-GET-must-not-have-a-request-body-%EC%97%90%EB%9F%AC) okhttp의 2020년 2월 최신 버전(3.11.0) 기준으로 **GET 방식 호출에서는 body를 붙이는 것을 허용해주지 않는다고 합니다.** 2014년 이전의 HTTP 요청 메시지에는 body를 허용하나, 이 역시 throw를 통해 원하는 응답을 받을 수 없게 될 확률이 높습니다. 이로 인해 아쉽게도 적용을 하지 못하고 **POST 메서드로 Request Body에 데이터를 담아 전송**하는 것으로 마무리 되었습니다.
 
-서버 분의 새로운 시각과, 알지 못했던 개념을 깨우치게된 경험이었습니다. 이 글을 빌어 멱등성이라는 개념을 잘 풀어 설명해주신 경민님과 좋은 인사이트를 주신 세은님께 감사드립니다 🥰
+서버 분의 새로운 시각을 발견하고, 알지 못했던 개념을 깨우치게된 경험이었습니다. 이 글을 빌어 멱등성이라는 개념을 잘 풀어 설명해주신 경민님과 좋은 인사이트를 주신 세은님께 감사드립니다 🥰
 
 
 <br>
